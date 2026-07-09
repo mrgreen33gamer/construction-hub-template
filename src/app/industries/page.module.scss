@@ -1,0 +1,124 @@
+// src/app/industries/page.module.scss
+@use 'sass:color';
+@use '../globalVariables.scss' as *;
+
+.pageWrapper {
+  min-height: 100vh;
+  background: transparent;
+  padding-bottom: 4rem;
+}
+
+.section {
+  margin-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin-bottom: 3rem;
+  }
+}
+
+// ── Industry grid (inline replacement for SectionIndustriesServed, whose
+//    hardcoded 10-vertical list doesn't match this site's 3 industries) ──────
+.industryGridHeader {
+  text-align: center;
+  max-width: 1400px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+}
+
+.industryGridHeading {
+  font-family: $titleFont;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+  color: $obsidian;
+}
+
+.industryGridSub {
+  font-family: $textFont;
+  font-size: 1.05rem;
+  color: $darkgrey;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.industryGrid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.industryCardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+
+  &:focus-visible {
+    outline: 2px solid $orange;
+    outline-offset: 2px;
+  }
+
+  &:hover .industryCard {
+    border-color: rgba($orange, 0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+  }
+
+  &:hover .industryArrow {
+    transform: translateX(4px);
+    color: $orange;
+  }
+}
+
+.industryCard {
+  background: $white;
+  border: 1px solid #e4e4e0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.industryIcon {
+  font-size: 1.6rem;
+  color: $orange;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.industryCardText {
+  flex: 1;
+}
+
+.industryLabel {
+  font-family: $headerFont;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $obsidian;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.industryDesc {
+  font-family: $textFont;
+  font-size: 0.92rem;
+  color: $grey;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.industryArrow {
+  font-size: 0.85rem;
+  color: $grey;
+  flex-shrink: 0;
+  margin-top: 0.3rem;
+  transition: transform 0.22s ease, color 0.22s ease;
+}
