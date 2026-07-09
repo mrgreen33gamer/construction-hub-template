@@ -1,7 +1,5 @@
-// _archetype-library/hero-f-blueprint/Component.tsx
-//
-// Hero F: Blueprint Schematic — self-drawing SVG line-art (house wireframe /
-// abstract floor-plan). Stroke-dashoffset draw-in on mount.
+// Construction Hub Hero — Site Plan + Phasing Board
+// Self-drawing construction site plan (foundation, crane, framing) — not a house wireframe.
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -9,188 +7,121 @@ import Link from 'next/link';
 import { PhoneIcon, ChevronIcon, CheckIcon } from './_shared/icons';
 import styles from './styles.module.scss';
 
-/** Path lengths are estimated; we measure real lengths on mount for accuracy. */
-function BlueprintSchematic({ label }: { label: string }) {
+function ConstructionSitePlan({ label }: { label: string }) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
-    // data-draw marks stroke geometry; filled nodes are excluded
     const paths = Array.from(svg.querySelectorAll<SVGGeometryElement>('[data-draw]'));
-
     paths.forEach((el, i) => {
       const length = typeof el.getTotalLength === 'function' ? el.getTotalLength() : 400;
       el.style.strokeDasharray = `${length}`;
       el.style.strokeDashoffset = `${length}`;
-      el.style.animation = `blueprintDraw 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-      el.style.animationDelay = `${0.35 + i * 0.07}s`;
+      el.style.animation = `blueprintDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+      el.style.animationDelay = `${0.2 + i * 0.05}s`;
+      // Safety: always reveal lines even if keyframes fail
+      window.setTimeout(() => {
+        el.style.strokeDashoffset = '0';
+      }, 2200 + i * 50);
     });
   }, []);
 
   return (
     <div className={styles.schematicWrap} role="img" aria-label={label}>
       <div className={styles.schematicGrid} aria-hidden="true" />
+      <div className={styles.planBadge} aria-hidden="true">
+        PHASE 02 · FRAMING
+      </div>
       <svg
         ref={svgRef}
         className={styles.schematic}
-        viewBox="0 0 360 320"
+        viewBox="0 0 380 340"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Outer plot boundary */}
-        <rect data-draw x="24" y="48" width="312" height="240" rx="2" className={styles.traceDim} />
+        {/* Site boundary */}
+        <rect data-draw x="18" y="28" width="344" height="290" rx="3" className={styles.traceDim} />
 
-        {/* Main structure footprint */}
+        {/* Foundation slab */}
+        <rect data-draw x="48" y="170" width="200" height="110" className={styles.traceMain} />
+        <line data-draw x1="48" y1="200" x2="248" y2="200" className={styles.traceDim} />
+        <line data-draw x1="48" y1="230" x2="248" y2="230" className={styles.traceDim} />
+        <line data-draw x1="98" y1="170" x2="98" y2="280" className={styles.traceDim} />
+        <line data-draw x1="148" y1="170" x2="148" y2="280" className={styles.traceDim} />
+        <line data-draw x1="198" y1="170" x2="198" y2="280" className={styles.traceDim} />
+
+        {/* Framing studs / walls */}
         <path
           data-draw
-          d="M56 200 L56 120 L120 72 L184 120 L184 200 Z"
+          d="M60 170 L60 95 L148 55 L236 95 L236 170"
           className={styles.traceMain}
         />
-        {/* Roof ridge detail */}
-        <line data-draw x1="120" y1="72" x2="120" y2="200" className={styles.traceDim} />
+        <line data-draw x1="104" y1="75" x2="104" y2="170" className={styles.traceDim} />
+        <line data-draw x1="148" y1="55" x2="148" y2="170" className={styles.traceAccent} />
+        <line data-draw x1="192" y1="75" x2="192" y2="170" className={styles.traceDim} />
 
-        {/* Attached wing / garage volume */}
+        {/* Roof ridge / truss hint */}
+        <path data-draw d="M60 95 L148 40 L236 95" className={styles.traceAccent} />
+        <line data-draw x1="100" y1="72" x2="148" y2="95" className={styles.traceDim} />
+        <line data-draw x1="196" y1="72" x2="148" y2="95" className={styles.traceDim} />
+
+        {/* Tower crane */}
+        <line data-draw x1="300" y1="280" x2="300" y2="48" className={styles.traceMain} />
+        <line data-draw x1="300" y1="48" x2="340" y2="48" className={styles.traceAccent} />
+        <line data-draw x1="300" y1="48" x2="250" y2="58" className={styles.traceMain} />
+        <line data-draw x1="250" y1="58" x2="250" y2="95" className={styles.traceAccent} />
+        <rect data-draw x="242" y="95" width="16" height="12" className={styles.traceAccent} />
+        <line data-draw x1="285" y1="280" x2="315" y2="280" className={styles.traceDim} />
+        <line data-draw x1="290" y1="290" x2="310" y2="290" className={styles.traceDim} />
+
+        {/* Material staging piles */}
+        <path data-draw d="M270 250 L285 220 L300 250 Z" className={styles.traceAccent} />
+        <path data-draw d="M310 255 L325 230 L340 255 Z" className={styles.traceDim} />
+
+        {/* Access road */}
         <path
           data-draw
-          d="M184 200 L184 140 L280 140 L280 200 Z"
-          className={styles.traceMain}
-        />
-        {/* Wing roof slope */}
-        <path data-draw d="M184 140 L232 108 L280 140" className={styles.traceAccent} />
-
-        {/* Interior partition lines */}
-        <line data-draw x1="56" y1="160" x2="184" y2="160" className={styles.traceDim} />
-        <line data-draw x1="120" y1="160" x2="120" y2="200" className={styles.traceDim} />
-        <line data-draw x1="232" y1="140" x2="232" y2="200" className={styles.traceDim} />
-
-        {/* Door openings */}
-        <path data-draw d="M100 200 L100 182 Q110 170 120 182 L120 200" className={styles.traceAccent} />
-        <line data-draw x1="248" y1="200" x2="264" y2="200" className={styles.traceAccent} />
-
-        {/* Window marks */}
-        <rect data-draw x="72" y="128" width="28" height="20" className={styles.traceDim} />
-        <rect data-draw x="140" y="128" width="28" height="20" className={styles.traceDim} />
-        <rect data-draw x="244" y="156" width="24" height="18" className={styles.traceDim} />
-
-        {/* Circuit-ish utility runs */}
-        <polyline
-          data-draw
-          points="56,200 40,200 40,248 200,248 200,200"
+          d="M18 300 Q90 290 148 300 T248 295 L360 300"
           className={styles.traceAccent}
         />
-        <polyline
-          data-draw
-          points="280,170 300,170 300,248 200,248"
-          className={styles.traceDim}
-        />
 
-        {/* Junction nodes (no draw animation) */}
-        <circle cx="40" cy="200" r="3.5" className={styles.node} />
-        <circle cx="200" cy="248" r="3.5" className={styles.node} />
-        <circle cx="300" cy="170" r="3.5" className={styles.node} />
-        <circle cx="120" cy="72" r="4" className={styles.nodeAccent} />
-        <circle cx="232" cy="108" r="3.5" className={styles.nodeAccent} />
+        {/* Dimension callouts */}
+        <line data-draw x1="48" y1="295" x2="248" y2="295" className={styles.traceDim} />
+        <line data-draw x1="48" y1="290" x2="48" y2="300" className={styles.traceDim} />
+        <line data-draw x1="248" y1="290" x2="248" y2="300" className={styles.traceDim} />
 
-        {/* Dimension tick marks */}
-        <line data-draw x1="56" y1="216" x2="184" y2="216" className={styles.traceDim} />
-        <line data-draw x1="56" y1="212" x2="56" y2="220" className={styles.traceDim} />
-        <line data-draw x1="184" y1="212" x2="184" y2="220" className={styles.traceDim} />
-        <line data-draw x1="296" y1="48" x2="336" y2="48" className={styles.traceDim} />
-        <line data-draw x1="336" y1="48" x2="336" y2="288" className={styles.traceDim} />
-
-        {/* Compass rose (abstract) */}
-        <circle data-draw cx="308" cy="72" r="14" className={styles.traceDim} />
-        <line data-draw x1="308" y1="58" x2="308" y2="86" className={styles.traceAccent} />
-        <line data-draw x1="294" y1="72" x2="322" y2="72" className={styles.traceDim} />
+        {/* Solid nodes (always visible) */}
+        <circle cx="148" cy="40" r="4" className={styles.nodeAccent} />
+        <circle cx="300" cy="48" r="4" className={styles.nodeAccent} />
+        <circle cx="250" cy="101" r="3.5" className={styles.node} />
+        <circle cx="60" cy="170" r="3" className={styles.node} />
+        <circle cx="236" cy="170" r="3" className={styles.node} />
       </svg>
       <div className={styles.schematicCaption} aria-hidden="true">
         <span className={styles.captionDot} />
-        SCHEMATIC
+        SITE PLAN · LIVE
+      </div>
+      <div className={styles.phaseChips} aria-hidden="true">
+        <span className={styles.phaseDone}>Demo</span>
+        <span className={styles.phaseDone}>Foundation</span>
+        <span className={styles.phaseActive}>Framing</span>
+        <span className={styles.phaseTodo}>Finish</span>
       </div>
     </div>
   );
 }
 
 export default function WelcomePage() {
-const badgeText = 'Waco\'s Most Trusted General Contractor — Since 2012';
-const headlineLines = [
-  'Design It.',
-  'Build It.',
-];
-const headlineAccent = 'Bedrock.';
-const subheadline = 'Written, itemized bids. Real timelines. A 2-year workmanship warranty on every project. Serving Waco and Central Texas with a licensed, bonded general contracting team.';
-const primaryCta = { label: 'Call (254) 720-8100', href: 'tel:+12547208100' };
-const secondaryCta = { label: 'Free Estimate', href: '/contact' };
-const chips = [
-  'Free Estimates',
-  'No Hidden Fees',
-  'Licensed & Bonded',
-  '14+ Yrs Local',
-  '2-Yr Warranty',
-];
-const stats = [
-  {
-    "value": "180+",
-    "label": "Projects Completed"
-  },
-  {
-    "value": "4.8 ★",
-    "label": "Google Rating"
-  },
-  {
-    "value": "2-Year",
-    "label": "Workmanship Warranty"
-  },
-  {
-    "value": "Free",
-    "label": "On-Site Estimates"
-  }
-];
-const meterTarget = 72;
-const meterTopLabel = "Peak";
-const meterMidLabel = "Local";
-const meterBotLabel = "Base";
-const particleColor = '#f59e0b';
-const beforeImageSrc = '/pages/home/welcome/before.jpg';
-const afterImageSrc = '/pages/home/welcome/after.jpg';
-const beforeLabel = "Scope chaos";
-const afterLabel = "Phased build";
-const mapCenterLabel = 'Service HQ';
-const mapPins = [
-  { label: 'Waco', x: 42, y: 48 },
-  { label: 'Temple', x: 68, y: 62 },
-  { label: 'Killeen', x: 58, y: 72 },
-];
-const coverageLabel = 'Central Texas coverage';
-const materials = [
-  { name: "Framing", swatch: "#f59e0b", imageSrc: "/pages/home/welcome/mat-1.jpg" },
-  { name: "Finish", swatch: "#fbbf24", imageSrc: "/pages/home/welcome/mat-2.jpg" },
-  { name: "Electrical", swatch: "#d97706", imageSrc: "/pages/home/welcome/mat-3.jpg" },
-  { name: "Plumbing", swatch: "#b45309", imageSrc: "/pages/home/welcome/mat-1.jpg" },
-  { name: "Exterior", swatch: "#92400e", imageSrc: "/pages/home/welcome/mat-2.jpg" },
-  { name: "Punch", swatch: "#78350f", imageSrc: "/pages/home/welcome/mat-3.jpg" }
-];
-const quote = "Weekly updates, no ghosting, and the punch list actually got finished. Rare in construction.";
-const authorName = "Nina S.";
-const authorMeta = "Addition · Waco";
-const rating = 5;
-const schematicLabel = "Bedrock schematic";
-const gauges = [
-  { label: "Projects", value: "650+" },
-  { label: "Rating", value: "4.8 ★" },
-  { label: "On budget", value: "Tracked" },
-  { label: "Warranty", value: "Workmanship" }
-];
-const toggles = [
-  { label: "Licensed crew", on: true },
-  { label: "Same-week", on: true },
-  { label: "Warrantied", on: true }
-];
-const textureSrc = '/pages/home/welcome/hero-main.jpg';
-const textureAlt = 'Texture';
-const accentWord = "Bedrock";
+  const badgeText = "Waco's Most Trusted General Contractor — Since 2012";
+  const headlineLines = ['Design It.', 'Build It.'];
+  const headlineAccent = 'Bedrock.';
+  const subheadline =
+    'Written, itemized bids. Real timelines. A 2-year workmanship warranty on every project. Serving Waco and Central Texas with a licensed, bonded general contracting team.';
+  const primaryCta = { label: 'Call (254) 720-8100', href: 'tel:+12547208100' };
+  const secondaryCta = { label: 'Free Estimate', href: '/contact' };
+  const chips = ['Free Estimates', 'No Hidden Fees', 'Licensed & Bonded', '14+ Yrs Local', '2-Yr Warranty'];
 
   return (
     <section className={styles.hero} aria-label="Hero">
@@ -215,7 +146,10 @@ const accentWord = "Bedrock";
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             {headlineLines.map((line, i) => (
-              <React.Fragment key={i}>{line}<br /></React.Fragment>
+              <React.Fragment key={i}>
+                {line}
+                <br />
+              </React.Fragment>
             ))}
             <span className={styles.accentLine}>{headlineAccent}</span>
           </motion.h1>
@@ -263,7 +197,7 @@ const accentWord = "Bedrock";
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
         >
-          <BlueprintSchematic label={schematicLabel} />
+          <ConstructionSitePlan label="Bedrock construction site plan" />
         </motion.div>
       </div>
     </section>
