@@ -36,36 +36,42 @@ export default function HomePage() {
       title: "New Home Construction",
       body: "Custom and spec-built homes from foundation to final walkthrough. Right-sized scope, real timelines, no surprises.",
       link: "/services/new-home-construction",
+      image: "/pages/home/services/service-1.jpg",
     },
     {
       icon: faHammer,
       title: "Home Additions & Remodels",
       body: "Add square footage or reimagine what you already have — structural additions, whole-home remodels, done to match your existing build.",
       link: "/services/home-additions-remodels",
+      image: "/pages/home/services/service-2.jpg",
     },
     {
       icon: faBath,
       title: "Kitchen & Bath Renovation",
       body: "Full gut renovations or targeted updates. Licensed trades on every job — plumbing, electrical, and finish carpentry under one contract.",
       link: "/services/kitchen-bath-renovation",
+      image: "/pages/home/services/service-3.jpg",
     },
     {
       icon: faBuilding,
       title: "Commercial Construction",
       body: "New builds and tenant improvements for retail, office, and light industrial space. Managed to your business's timeline, not ours.",
       link: "/services/commercial-construction",
+      image: "/pages/home/services/service-4.jpg",
     },
     {
       icon: faDraftingCompass,
       title: "Design-Build Services",
       body: "Design and construction under a single contract and a single point of contact — faster decisions, fewer handoffs, one team accountable end to end.",
       link: "/services/design-build-services",
+      image: "/pages/home/services/service-1.jpg",
     },
     {
       icon: faClipboardList,
       title: "General Contracting / Project Management",
       body: "Full project oversight for owner-designed builds — permitting, scheduling, and a managed subcontractor crew for every trade.",
       link: "/services/general-contracting",
+      image: "/pages/home/services/service-2.jpg",
     },
   ];
 
@@ -203,16 +209,10 @@ export default function HomePage() {
 
   return (
     <main className={styles.pageWrapper}>
-
-      {/* 1. Hero */}
       <WelcomePage />
-
-      {/* 2. Scrolling trust strip — immediately after hero */}
       <TrustBar
         headline="Waco's trusted general contractor — licensed, bonded, and warrantied on every job"
       />
-
-      {/* 3. Impact metrics — build credibility before pitching services */}
       <div className={styles.section}>
         <ImpactMetrics
           title="Numbers That Speak for Us"
@@ -220,16 +220,15 @@ export default function HomePage() {
           cityName="Waco"
         />
       </div>
-
-      {/* 4. Services grid */}
       <div className={styles.section}>
         <ServiceCardComponent
           heading="Complete Construction Services for Your Project"
           cards={services}
         />
       </div>
-
-      {/* 5. Why Choose Us */}
+      <div className={styles.section}>
+        <ProcessTimeline steps={processSteps} />
+      </div>
       <div className={styles.section}>
         <WhyChooseUs
           cityName="Waco"
@@ -237,8 +236,45 @@ export default function HomePage() {
           title="What Makes Bedrock Different"
         />
       </div>
-
-      {/* 14. Contact form — final conversion point */}
+      <CTABanner
+        headline="Builds Managed Like a Pro."
+        subline="Remodels and light commercial construction with clear phases, schedules, and one accountable PM."
+        primaryText="Call (254) 720-8100"
+        primaryLink="tel:+12547208100"
+        secondaryText="Start Project Consult"
+        secondaryLink="/contact"
+        imageSrc="/pages/home/welcome/hero-main.jpg"
+      />
+      <div className={styles.section}>
+        <Testimonials testimonials={reviews} />
+      </div>
+      <div className={styles.section}>
+        <GuaranteeSection />
+      </div>
+      <div className={styles.section}>
+        <LocalServiceAreas
+          cityName="Waco"
+          areas={localAreas}
+          servicePath=""
+          title="Serving All of Central Texas"
+        />
+      </div>
+      <div className={styles.section}>
+        <WhatToExpect
+          sectionTitle="Every Project, Every Time"
+          expectations={expectations}
+        />
+      </div>
+      <div className={styles.section}>
+        <FAQ
+          cityName="Waco"
+          faq={faq}
+          title="Construction Questions — Answered Straight"
+        />
+      </div>
+      <div className={styles.section}>
+        <BlogPreviewGrid />
+      </div>
       <div className={styles.section}>
         <Variant4
           title="Request a Free Estimate"
@@ -248,65 +284,6 @@ export default function HomePage() {
           formVariant={2}
         />
       </div>
-
-      {/* 7. How it works — process after the CTA so urgency is set */}
-      <div className={styles.section}>
-        <ProcessTimeline steps={processSteps} />
-      </div>
-
-      {/* 8. Social proof — reviews before the guarantee promise */}
-      <div className={styles.section}>
-        <Testimonials testimonials={reviews} />
-      </div>
-
-      {/* 9. Guarantee — peer validation already done, now make the promise */}
-      <div className={styles.section}>
-        <GuaranteeSection />
-      </div>
-
-      {/* 6. Mid-page CTA */}
-      <CTABanner
-        headline="Ready to Start Your Project? Let's Talk."
-        subline="Free on-site estimates across Waco, Temple, Killeen, and all of Central Texas. Written bids. 2-year workmanship warranty."
-        primaryText="Call (254) 720-8100"
-        primaryLink="tel:+12547208100"
-        secondaryText="Book a Consultation"
-        secondaryLink="/contact"
-      />
-
-
-      {/* 10. Service areas */}
-      <div className={styles.section}>
-        <LocalServiceAreas
-          cityName="Waco"
-          areas={localAreas}
-          servicePath=""
-          title="Serving All of Central Texas"
-        />
-      </div>
-
-      {/* 11. What to expect (detail reassurance — lower in page) */}
-      <div className={styles.section}>
-        <WhatToExpect
-          sectionTitle="Every Project, Every Time"
-          expectations={expectations}
-        />
-      </div>
-
-      {/* 12. FAQ */}
-      <div className={styles.section}>
-        <FAQ
-          cityName="Waco"
-          faq={faq}
-          title="Construction Questions — Answered Straight"
-        />
-      </div>
-
-      {/* 13. Blog preview — educational content before the final form */}
-      <div className={styles.section}>
-        <BlogPreviewGrid />
-      </div>
-
     </main>
   );
 }

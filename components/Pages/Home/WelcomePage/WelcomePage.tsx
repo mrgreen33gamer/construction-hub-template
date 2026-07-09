@@ -1,190 +1,269 @@
+// _archetype-library/hero-f-blueprint/Component.tsx
+//
+// Hero F: Blueprint Schematic — self-drawing SVG line-art (house wireframe /
+// abstract floor-plan). Stroke-dashoffset draw-in on mount.
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { PhoneIcon, ChevronIcon, CheckIcon } from './_shared/icons';
 import styles from './styles.module.scss';
 
-// ── Sawdust canvas ────────────────────────────────────────────────────────────
-function ParticleCanvas() {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = ref.current; if (!canvas) return;
-    const ctx = canvas.getContext('2d'); if (!ctx) return;
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize(); window.addEventListener('resize', resize);
-    const pts = Array.from({ length: 34 }, () => ({
-      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-      r: Math.random() * 3.5 + 1, vx: (Math.random() - 0.5) * 0.8,
-      vy: Math.random() * 0.35 + 0.12, o: Math.random() * 0.35 + 0.55,
-      spin: Math.random() * 0.05 - 0.025, angle: Math.random() * Math.PI * 2,
-    }));
-    let raf: number;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pts.forEach(p => {
-        ctx.save(); ctx.globalAlpha = p.o;
-        ctx.translate(p.x, p.y); ctx.rotate(p.angle);
-        ctx.fillStyle = '#f5a623';
-        ctx.fillRect(-p.r, -p.r * 0.5, p.r * 2, p.r);
-        ctx.restore();
-        p.x += p.vx; p.y += p.vy; p.angle += p.spin;
-        if (p.y > canvas.height + 10) { p.y = -10; p.x = Math.random() * canvas.width; }
-        if (p.x < -10) p.x = canvas.width + 10;
-        if (p.x > canvas.width + 10) p.x = -10;
-      });
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
-  }, []);
-  return <canvas ref={ref} className={styles.particleCanvas} aria-hidden="true" />;
-}
+/** Path lengths are estimated; we measure real lengths on mount for accuracy. */
+function BlueprintSchematic({ label }: { label: string }) {
+  const svgRef = useRef<SVGSVGElement>(null);
 
-// ── Build meter (replaces thermometer) ───────────────────────────────────────
-function BuildMeter() {
-  const [fill, setFill] = useState(0);
-  useEffect(() => { const t = setTimeout(() => setFill(100), 750); return () => clearTimeout(t); }, []);
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    // data-draw marks stroke geometry; filled nodes are excluded
+    const paths = Array.from(svg.querySelectorAll<SVGGeometryElement>('[data-draw]'));
+
+    paths.forEach((el, i) => {
+      const length = typeof el.getTotalLength === 'function' ? el.getTotalLength() : 400;
+      el.style.strokeDasharray = `${length}`;
+      el.style.strokeDashoffset = `${length}`;
+      el.style.animation = `blueprintDraw 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+      el.style.animationDelay = `${0.35 + i * 0.07}s`;
+    });
+  }, []);
+
   return (
-    <div className={styles.thermo} aria-hidden="true">
-      {/* tube + bulb stacked in normal flow → reliable centering */}
-      <div className={styles.thermoColumn}>
-        <div className={styles.thermoTube}>
-          <motion.div
-            className={styles.thermoFill}
-            initial={{ height: '0%' }}
-            animate={{ height: `${fill}%` }}
-            transition={{ duration: 2.0, delay: 0.85, ease: [0.34, 1.2, 0.64, 1] }}
-          />
-        </div>
-        <div className={styles.thermoBulb} />
-      </div>
-      {/* labels aligned to tube height */}
-      <div className={styles.thermoLabels}>
-        <span className={styles.thermoTop}>Built</span>
-        <span className={styles.thermoMid}>Waco, TX</span>
-        <span className={styles.thermoBot}>Ground Broke</span>
+    <div className={styles.schematicWrap} role="img" aria-label={label}>
+      <div className={styles.schematicGrid} aria-hidden="true" />
+      <svg
+        ref={svgRef}
+        className={styles.schematic}
+        viewBox="0 0 360 320"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        {/* Outer plot boundary */}
+        <rect data-draw x="24" y="48" width="312" height="240" rx="2" className={styles.traceDim} />
+
+        {/* Main structure footprint */}
+        <path
+          data-draw
+          d="M56 200 L56 120 L120 72 L184 120 L184 200 Z"
+          className={styles.traceMain}
+        />
+        {/* Roof ridge detail */}
+        <line data-draw x1="120" y1="72" x2="120" y2="200" className={styles.traceDim} />
+
+        {/* Attached wing / garage volume */}
+        <path
+          data-draw
+          d="M184 200 L184 140 L280 140 L280 200 Z"
+          className={styles.traceMain}
+        />
+        {/* Wing roof slope */}
+        <path data-draw d="M184 140 L232 108 L280 140" className={styles.traceAccent} />
+
+        {/* Interior partition lines */}
+        <line data-draw x1="56" y1="160" x2="184" y2="160" className={styles.traceDim} />
+        <line data-draw x1="120" y1="160" x2="120" y2="200" className={styles.traceDim} />
+        <line data-draw x1="232" y1="140" x2="232" y2="200" className={styles.traceDim} />
+
+        {/* Door openings */}
+        <path data-draw d="M100 200 L100 182 Q110 170 120 182 L120 200" className={styles.traceAccent} />
+        <line data-draw x1="248" y1="200" x2="264" y2="200" className={styles.traceAccent} />
+
+        {/* Window marks */}
+        <rect data-draw x="72" y="128" width="28" height="20" className={styles.traceDim} />
+        <rect data-draw x="140" y="128" width="28" height="20" className={styles.traceDim} />
+        <rect data-draw x="244" y="156" width="24" height="18" className={styles.traceDim} />
+
+        {/* Circuit-ish utility runs */}
+        <polyline
+          data-draw
+          points="56,200 40,200 40,248 200,248 200,200"
+          className={styles.traceAccent}
+        />
+        <polyline
+          data-draw
+          points="280,170 300,170 300,248 200,248"
+          className={styles.traceDim}
+        />
+
+        {/* Junction nodes (no draw animation) */}
+        <circle cx="40" cy="200" r="3.5" className={styles.node} />
+        <circle cx="200" cy="248" r="3.5" className={styles.node} />
+        <circle cx="300" cy="170" r="3.5" className={styles.node} />
+        <circle cx="120" cy="72" r="4" className={styles.nodeAccent} />
+        <circle cx="232" cy="108" r="3.5" className={styles.nodeAccent} />
+
+        {/* Dimension tick marks */}
+        <line data-draw x1="56" y1="216" x2="184" y2="216" className={styles.traceDim} />
+        <line data-draw x1="56" y1="212" x2="56" y2="220" className={styles.traceDim} />
+        <line data-draw x1="184" y1="212" x2="184" y2="220" className={styles.traceDim} />
+        <line data-draw x1="296" y1="48" x2="336" y2="48" className={styles.traceDim} />
+        <line data-draw x1="336" y1="48" x2="336" y2="288" className={styles.traceDim} />
+
+        {/* Compass rose (abstract) */}
+        <circle data-draw cx="308" cy="72" r="14" className={styles.traceDim} />
+        <line data-draw x1="308" y1="58" x2="308" y2="86" className={styles.traceAccent} />
+        <line data-draw x1="294" y1="72" x2="322" y2="72" className={styles.traceDim} />
+      </svg>
+      <div className={styles.schematicCaption} aria-hidden="true">
+        <span className={styles.captionDot} />
+        SCHEMATIC
       </div>
     </div>
   );
 }
 
-const CHIPS = ['Free Estimates', 'No Hidden Fees', 'Licensed & Bonded', '14+ Yrs Local', '2-Yr Warranty'];
-
 export default function WelcomePage() {
+const badgeText = 'Waco\'s Most Trusted General Contractor — Since 2012';
+const headlineLines = [
+  'Design It.',
+  'Build It.',
+];
+const headlineAccent = 'Bedrock.';
+const subheadline = 'Written, itemized bids. Real timelines. A 2-year workmanship warranty on every project. Serving Waco and Central Texas with a licensed, bonded general contracting team.';
+const primaryCta = { label: 'Call (254) 720-8100', href: 'tel:+12547208100' };
+const secondaryCta = { label: 'Free Estimate', href: '/contact' };
+const chips = [
+  'Free Estimates',
+  'No Hidden Fees',
+  'Licensed & Bonded',
+  '14+ Yrs Local',
+  '2-Yr Warranty',
+];
+const stats = [
+  {
+    "value": "180+",
+    "label": "Projects Completed"
+  },
+  {
+    "value": "4.8 ★",
+    "label": "Google Rating"
+  },
+  {
+    "value": "2-Year",
+    "label": "Workmanship Warranty"
+  },
+  {
+    "value": "Free",
+    "label": "On-Site Estimates"
+  }
+];
+const meterTarget = 72;
+const meterTopLabel = "Peak";
+const meterMidLabel = "Local";
+const meterBotLabel = "Base";
+const particleColor = '#f59e0b';
+const beforeImageSrc = '/pages/home/welcome/before.jpg';
+const afterImageSrc = '/pages/home/welcome/after.jpg';
+const beforeLabel = "Scope chaos";
+const afterLabel = "Phased build";
+const mapCenterLabel = 'Service HQ';
+const mapPins = [
+  { label: 'Waco', x: 42, y: 48 },
+  { label: 'Temple', x: 68, y: 62 },
+  { label: 'Killeen', x: 58, y: 72 },
+];
+const coverageLabel = 'Central Texas coverage';
+const materials = [
+  { name: "Framing", swatch: "#f59e0b", imageSrc: "/pages/home/welcome/mat-1.jpg" },
+  { name: "Finish", swatch: "#fbbf24", imageSrc: "/pages/home/welcome/mat-2.jpg" },
+  { name: "Electrical", swatch: "#d97706", imageSrc: "/pages/home/welcome/mat-3.jpg" },
+  { name: "Plumbing", swatch: "#b45309", imageSrc: "/pages/home/welcome/mat-1.jpg" },
+  { name: "Exterior", swatch: "#92400e", imageSrc: "/pages/home/welcome/mat-2.jpg" },
+  { name: "Punch", swatch: "#78350f", imageSrc: "/pages/home/welcome/mat-3.jpg" }
+];
+const quote = "Weekly updates, no ghosting, and the punch list actually got finished. Rare in construction.";
+const authorName = "Nina S.";
+const authorMeta = "Addition · Waco";
+const rating = 5;
+const schematicLabel = "Bedrock schematic";
+const gauges = [
+  { label: "Projects", value: "650+" },
+  { label: "Rating", value: "4.8 ★" },
+  { label: "On budget", value: "Tracked" },
+  { label: "Warranty", value: "Workmanship" }
+];
+const toggles = [
+  { label: "Licensed crew", on: true },
+  { label: "Same-week", on: true },
+  { label: "Warrantied", on: true }
+];
+const textureSrc = '/pages/home/welcome/hero-main.jpg';
+const textureAlt = 'Texture';
+const accentWord = "Bedrock";
+
   return (
     <section className={styles.hero} aria-label="Hero">
-      <ParticleCanvas />
       <div className={styles.shard} aria-hidden="true" />
 
       <div className={styles.layout}>
-
-        {/* LEFT ── text */}
         <div className={styles.content}>
-          <motion.div className={styles.badge}
-            initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}>
+          <motion.div
+            className={styles.badge}
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <span className={styles.badgeDot} />
-            Waco&apos;s Most Trusted General Contractor — Since 2012
+            {badgeText}
           </motion.div>
 
-          <motion.h1 className={styles.headline}
-            initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}>
-            Design It.<br />Build It.<br />
-            <span className={styles.accentLine}>Bedrock.</span>
+          <motion.h1
+            className={styles.headline}
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {headlineLines.map((line, i) => (
+              <React.Fragment key={i}>{line}<br /></React.Fragment>
+            ))}
+            <span className={styles.accentLine}>{headlineAccent}</span>
           </motion.h1>
 
-          <motion.p className={styles.sub}
-            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.22 }}>
-            Written, itemized bids. Real timelines. A 2-year workmanship warranty on every project.
-            Serving Waco and Central Texas with a licensed, bonded general contracting team.
+          <motion.p
+            className={styles.sub}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.22 }}
+          >
+            {subheadline}
           </motion.p>
 
-          <motion.div className={styles.ctaRow}
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.34 }}>
-            <a href="tel:+12547208100" className={styles.ctaPrimary}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.17 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-              Call (254) 720-8100
+          <motion.div
+            className={styles.ctaRow}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.34 }}
+          >
+            <a href={primaryCta.href} className={styles.ctaPrimary}>
+              <PhoneIcon size={15} /> {primaryCta.label}
             </a>
-            <Link href="/contact" className={styles.ctaSecondary}>
-              Free Estimate
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <polyline points="9 18 15 12 9 6"/>
-              </svg>
+            <Link href={secondaryCta.href} className={styles.ctaSecondary}>
+              {secondaryCta.label} <ChevronIcon size={12} />
             </Link>
           </motion.div>
 
-          <motion.div className={styles.chips}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.48 }}>
-            {CHIPS.map(c => (
+          <motion.div
+            className={styles.chips}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.48 }}
+          >
+            {chips.map((c) => (
               <span key={c} className={styles.chip}>
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                {c}
+                <CheckIcon size={9} /> {c}
               </span>
             ))}
           </motion.div>
         </div>
 
-        {/* RIGHT ── visual widget */}
         <motion.div
           className={styles.visual}
-          initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.28, ease: 'easeOut' }}
-          aria-hidden="true"
+          initial={{ opacity: 0, x: 28 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
         >
-          {/* bg mark */}
-          <motion.div className={styles.bgFlake}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 65, repeat: Infinity, ease: 'linear' }}>
-            <svg width="420" height="420" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.3" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 11l9-8 9 8"/>
-              <path d="M5 9.5V21h14V9.5"/>
-              <path d="M9 21v-6h6v6"/>
-            </svg>
-          </motion.div>
-
-          {/* ── stat card: projects completed — upper left ── */}
-          <motion.div className={`${styles.statCard} ${styles.sc1}`}
-            initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.05, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>180+</span>
-            <span className={styles.scLbl}>Projects Completed</span>
-          </motion.div>
-
-          {/* ── stat card: rating — upper right ── */}
-          <motion.div className={`${styles.statCard} ${styles.sc2}`}
-            initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.2, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>4.8 ★</span>
-            <span className={styles.scLbl}>Google Rating</span>
-          </motion.div>
-
-          {/* ── build meter — dead center ── */}
-          <BuildMeter />
-
-          {/* ── stat card: warranty — lower left ── */}
-          <motion.div className={`${styles.statCard} ${styles.sc3}`}
-            initial={{ opacity: 0, y: 10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.35, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>2-Year</span>
-            <span className={styles.scLbl}>Workmanship Warranty</span>
-          </motion.div>
-
-          {/* ── stat card: estimates — lower right, amber ── */}
-          <motion.div className={`${styles.statCard} ${styles.sc4} ${styles.scOrange}`}
-            initial={{ opacity: 0, y: 10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 1.5, type: 'spring', stiffness: 240, damping: 18 }}>
-            <span className={styles.scNum}>Free</span>
-            <span className={styles.scLbl}>On-Site Estimates</span>
-          </motion.div>
-
+          <BlueprintSchematic label={schematicLabel} />
         </motion.div>
       </div>
     </section>

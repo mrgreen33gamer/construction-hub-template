@@ -1,44 +1,30 @@
-// src/app/globalVariables.scss
-// ─────────────────────────────────────────────────────────────────────────────
-// Bedrock Construction Group — Brand Tokens
-//
-// THREE DISTINCT FONTS:
-//   $titleFont  → Barlow Condensed  — bold condensed display (hero h1, section titles)
-//   $headerFont → Outfit            — clean geometric sans   (nav, card titles, labels, CTAs)
-//   $textFont   → Inter             — refined humanist sans  (body copy, form text, paragraphs)
-//
-// Usage guide:
-//   h1, .hero headline              → $titleFont  (uppercase, tight tracking)
-//   h2, h3, nav links, btn text     → $headerFont (medium weight, normal case)
-//   p, label, input, small text     → $textFont   (regular/medium weight)
-// ─────────────────────────────────────────────────────────────────────────────
+// Auto uniqueness tokens — general contractor hub
+$titleFont:  var(--font-title),  'Staatliches', sans-serif;
+$headerFont: var(--font-header), 'Saira', sans-serif;
+$textFont:   var(--font-body),   'Overpass', sans-serif;
 
-$titleFont:  var(--font-barlow-condensed), 'Barlow Condensed', sans-serif;
-$headerFont: var(--font-outfit),           'Outfit',           sans-serif;
-$textFont:   var(--font-inter),            'Inter',            sans-serif;
-
-// ── Core Palette ─────────────────────────────────────────────────────────────
 $black:      #000000;
-$obsidian:   #1c1a17;
-$blackflat:  #2c2824;
+$obsidian:   #1e293b;
+$blackflat:  #1e293b;
 $white:      #FFFFFF;
-$offwhite:   #faf8f5;
+$offwhite:   #fffbeb;
 
-// Greys (charcoal-tinted)
-$darkgrey:   #8f8878;
-$grey:       #5c5648;
-$lightgrey:  #ded8c9;
+$darkgrey:   #94a3b8;
+$grey:       #64748b;
+$lightgrey:  #e2e8f0;
 
-// Brand Accent — construction amber / safety-yellow
-$orange:     #f5a623;
-$lightorange:#ffc94d;
-$darkorange: #c97f0d;
+$orange:     #f59e0b;
+$lightorange:#fbbf24;
+$darkorange: #b45309;
 
-// Legacy aliases
 $green:      $orange;
 $lightgreen: $lightorange;
 $darkgreen:  $darkorange;
-$blue:       #1e6fa8;
+$blue:       #f59e0b;
 
-// Error
+$radius-sm:  3px;
+$radius-md:  6px;
+$radius-lg:  10px;
+$radius-pill: 4px;
+
 $danger-red: #ef4444;
