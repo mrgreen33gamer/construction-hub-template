@@ -261,22 +261,24 @@
 }
 
 /* === COOKIE UNIQUENESS — construction-hub-template === */
+/* Corner card (not full-bleed). Brand accents only. */
 .backdrop {
-  bottom: 0 !important;
-  right: 0 !important;
-  left: 0 !important;
+  bottom: 1.25rem !important;
+  right: 1.25rem !important;
+  left: auto !important;
   top: auto !important;
-  max-width: 100% !important;
-  transform: none;
+  max-width: 360px !important;
+  width: calc(100vw - 2.5rem) !important;
+  transform: none !important;
 }
 
 .card {
   background: $obsidian !important;
-  border: 1px solid rgba($white, 0.06) !important;
-  border-radius: 24px !important;
+  border: 1px solid rgba($white, 0.08) !important;
+  border-radius: 14px !important;
   padding: 1.35rem !important;
   border-top: 3px solid $orange !important;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -289,7 +291,7 @@
 }
 
 .iconWrap {
-  border-radius: 0 !important;
+  border-radius: 6px !important;
   background: rgba($orange, 0.14) !important;
   border-color: rgba($orange, 0.28) !important;
   color: $orange !important;
@@ -298,12 +300,26 @@
 .btnAccept {
   background: $orange !important;
   color: $obsidian !important;
-  border-radius: 4px !important;
+  border-radius: 6px !important;
   &:hover { filter: brightness(1.08); }
 }
 
 .btnDecline,
 .btnEssential {
-  border-radius: 4px !important;
+  border-radius: 6px !important;
+}
+
+@media (max-width: 480px) {
+  .backdrop {
+    bottom: 0.75rem !important;
+    right: 0.75rem !important;
+    left: 0.75rem !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .card {
+    border-radius: 14px !important;
+  }
 }
 /* end cookie uniqueness */
