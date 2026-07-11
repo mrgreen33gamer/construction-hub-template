@@ -43,7 +43,7 @@ const marqueeItems = [
   'Serving Central Texas Since 2012',
   'Licensed & Bonded · Waco, TX',
 ];
-const footerLine = 'Licensed &amp; Bonded · Waco, TX';
+const footerLine = 'Licensed & Bonded · Waco, TX';
 const secondaryCtaLabel = 'Book Now';
 const secondaryCtaHref = '/contact';
 const hoursText = 'Mon–Sat · 7am–7pm';
