@@ -55,8 +55,8 @@ export default function Page() {
       <BlogHero
         title="7 Signs Your Waco Home Is Overdue for a Remodel"
         description="Aging systems, a layout that doesn't work anymore, deferred maintenance piling up — here are the signs it's time to remodel instead of patch things again."
-        imageSrc="/pages/blogs/signs-you-need-a-remodel.jpg"
-        imageAlt="Outdated kitchen in a Waco TX home ready for renovation"
+        imageSrc="/pages/home/services/service-2.jpg"
+        imageAlt="Construction crew assessing a Waco TX home ahead of a remodel"
         category="Remodeling"
         date="April 28, 2026"
         readTime={7}

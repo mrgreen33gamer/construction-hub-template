@@ -56,8 +56,8 @@ export default function Page() {
       <BlogHero
         title="How to Choose a General Contractor in Waco, TX: 7 Things to Check Before You Sign"
         description="Hiring the wrong GC can cost you months and thousands in change orders. Here's exactly what to verify before you sign a contract in Central Texas."
-        imageSrc="/pages/blogs/choosing-a-general-contractor.jpg"
-        imageAlt="Homeowner reviewing a general contractor bid in Waco TX"
+        imageSrc="/pages/home/services/service-3.jpg"
+        imageAlt="General contractor reviewing blueprints for a Waco TX remodel"
         category="Hiring"
         date="April 20, 2026"
         readTime={8}

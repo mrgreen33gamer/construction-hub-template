@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/logos/scott-apps-banner.png?v=3`,
+        url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`,
         alt: "Bedrock Construction Group — Construction Services for Central Texas",
       },
     ],
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "Construction Services | Bedrock Construction Group",
     description:
       "New home construction, remodels, commercial construction, and design-build for Central Texas. Written, itemized bids, 2-year workmanship warranty.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png?v=3`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
   robots: { index: true, follow: true },
 };

@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     siteName: "Bedrock Construction Group",
     locale: "en_US",
     type: "website",
-    images: [{ url: `${BASE_URL}/logos/scott-apps-banner.png`, alt: "Home additions and remodels in Waco, TX – Bedrock Construction Group" }],
+    images: [{ url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`, alt: "Home additions and remodels in Waco, TX – Bedrock Construction Group" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Home Additions & Remodels in Waco, TX | Bedrock Construction Group",
     description: "Structural additions and whole-home remodels for Waco and Central Texas.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
 };
 

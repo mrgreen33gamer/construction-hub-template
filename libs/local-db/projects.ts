@@ -66,9 +66,9 @@ const newHomeProjects: Project[] = [
     result: 'Delivered Early',
     tags: ['Custom Build', 'Foundation to Finish', 'Woodway'],
     images: [
-      { src: '/projects/lakeshore-custom-home/1.jpg', alt: 'Lakeshore Drive custom home exterior', caption: 'Completed exterior' },
-      { src: '/projects/lakeshore-custom-home/2.jpg', alt: 'Open-concept living area', caption: '' },
-      { src: '/projects/lakeshore-custom-home/3.jpg', alt: 'Outdoor kitchen and patio', caption: '' },
+      { src: '/pages/home/services/service-1.jpg', alt: 'Lakeshore Drive custom home exterior', caption: 'Completed exterior' },
+      { src: '/pages/home/services/service-2.jpg', alt: 'Open-concept living area', caption: '' },
+      { src: '/pages/home/services/service-4.jpg', alt: 'Outdoor kitchen and patio', caption: '' },
     ],
     featured: true,
   },
@@ -86,8 +86,8 @@ const newHomeProjects: Project[] = [
     result: 'On-Schedule Draws',
     tags: ['Spec Homes', 'Developer Build', 'McGregor'],
     images: [
-      { src: '/projects/spring-creek-spec-homes/1.jpg', alt: 'Spring Creek spec home exteriors', caption: '' },
-      { src: '/projects/spring-creek-spec-homes/2.jpg', alt: 'Framing in progress', caption: '' },
+      { src: '/pages/home/services/service-3.jpg', alt: 'Spring Creek spec home exteriors', caption: '' },
+      { src: '/pages/home/welcome/mat-1.jpg', alt: 'Framing in progress', caption: '' },
     ],
   },
 ];
@@ -110,11 +110,11 @@ const additionsProjects: Project[] = [
     result: 'Seamless Match',
     tags: ['Room Addition', 'Primary Suite', 'Hewitt'],
     images: [
-      { src: '/projects/hewitt-primary-suite-addition/1.jpg', alt: 'New primary suite addition exterior', caption: '' },
-      { src: '/projects/hewitt-primary-suite-addition/2.jpg', alt: 'Primary suite interior', caption: '' },
+      { src: '/pages/home/welcome/mat-2.jpg', alt: 'New primary suite addition exterior', caption: '' },
+      { src: '/pages/home/welcome/mat-3.jpg', alt: 'Primary suite interior', caption: '' },
     ],
-    beforeImage: { src: '/projects/hewitt-primary-suite-addition/before.jpg', alt: 'Home exterior before addition' },
-    afterImage:  { src: '/projects/hewitt-primary-suite-addition/after.jpg', alt: 'Home exterior after addition' },
+    beforeImage: { src: '/pages/home/welcome/before.jpg', alt: 'Home exterior before addition' },
+    afterImage:  { src: '/pages/home/welcome/after.jpg', alt: 'Home exterior after addition' },
     featured: true,
   },
   {
@@ -131,7 +131,7 @@ const additionsProjects: Project[] = [
     result: 'Zero Change Orders',
     tags: ['Detached Garage', 'Workshop', 'McGregor'],
     images: [
-      { src: '/projects/mcgregor-garage-workshop/1.jpg', alt: 'Detached garage and workshop exterior', caption: '' },
+      { src: '/pages/home/welcome/hero-main.jpg', alt: 'Detached garage and workshop exterior', caption: '' },
     ],
   },
   {
@@ -148,8 +148,8 @@ const additionsProjects: Project[] = [
     result: 'On the Promised Date',
     tags: ['Whole-Home Remodel', 'Floor Plan Reconfiguration', 'Woodway'],
     images: [
-      { src: '/projects/woodway-whole-home-remodel/1.jpg', alt: 'Remodeled open-concept living space', caption: '' },
-      { src: '/projects/woodway-whole-home-remodel/2.jpg', alt: 'Updated kitchen and dining area', caption: '' },
+      { src: '/pages/home/services/service-1.jpg', alt: 'Remodeled open-concept living space', caption: '' },
+      { src: '/pages/home/services/service-2.jpg', alt: 'Updated kitchen and dining area', caption: '' },
     ],
   },
 ];
@@ -172,11 +172,11 @@ const kitchenBathProjects: Project[] = [
     result: 'Finished Early',
     tags: ['Kitchen Remodel', 'Custom Cabinetry', 'Woodway'],
     images: [
-      { src: '/projects/woodway-kitchen-gut-remodel/1.jpg', alt: 'Renovated kitchen with custom cabinetry', caption: '' },
-      { src: '/projects/woodway-kitchen-gut-remodel/2.jpg', alt: 'New kitchen island', caption: '' },
+      { src: '/pages/home/services/service-4.jpg', alt: 'Renovated kitchen with custom cabinetry', caption: '' },
+      { src: '/pages/home/services/service-3.jpg', alt: 'New kitchen island', caption: '' },
     ],
-    beforeImage: { src: '/projects/woodway-kitchen-gut-remodel/before.jpg', alt: 'Original kitchen before renovation' },
-    afterImage:  { src: '/projects/woodway-kitchen-gut-remodel/after.jpg', alt: 'Renovated kitchen after completion' },
+    beforeImage: { src: '/pages/home/welcome/before.jpg', alt: 'Original kitchen before renovation' },
+    afterImage:  { src: '/pages/home/welcome/after.jpg', alt: 'Renovated kitchen after completion' },
     featured: true,
   },
   {
@@ -193,7 +193,7 @@ const kitchenBathProjects: Project[] = [
     result: 'On-Schedule, 3 Weeks',
     tags: ['Bathroom Remodel', 'Tile Work', 'Bellmead'],
     images: [
-      { src: '/projects/bellmead-double-bath-renovation/1.jpg', alt: 'Renovated bathroom with custom tile', caption: '' },
+      { src: '/pages/home/welcome/mat-1.jpg', alt: 'Renovated bathroom with custom tile', caption: '' },
     ],
   },
   {
@@ -210,7 +210,7 @@ const kitchenBathProjects: Project[] = [
     result: 'Character Preserved',
     tags: ['Historic Renovation', 'Kitchen Remodel', 'Waco'],
     images: [
-      { src: '/projects/waco-historic-kitchen-update/1.jpg', alt: 'Renovated kitchen in historic home', caption: '' },
+      { src: '/pages/home/welcome/mat-2.jpg', alt: 'Renovated kitchen in historic home', caption: '' },
     ],
   },
 ];
@@ -233,8 +233,8 @@ const commercialProjects: Project[] = [
     result: 'Opened On Date',
     tags: ['Tenant Improvement', 'Retail Buildout', 'Temple'],
     images: [
-      { src: '/projects/temple-retail-buildout/1.jpg', alt: 'Completed retail buildout interior', caption: '' },
-      { src: '/projects/temple-retail-buildout/2.jpg', alt: 'Storefront exterior', caption: '' },
+      { src: '/pages/home/welcome/mat-3.jpg', alt: 'Completed retail buildout interior', caption: '' },
+      { src: '/pages/home/welcome/hero-main.jpg', alt: 'Storefront exterior', caption: '' },
     ],
     featured: true,
   },
@@ -252,7 +252,7 @@ const commercialProjects: Project[] = [
     result: 'Zero Business Disruption',
     tags: ['Office Renovation', 'Phased Construction', 'Waco'],
     images: [
-      { src: '/projects/waco-office-renovation/1.jpg', alt: 'Renovated office interior', caption: '' },
+      { src: '/pages/home/services/service-1.jpg', alt: 'Renovated office interior', caption: '' },
     ],
   },
 ];
@@ -275,8 +275,8 @@ const designBuildProjects: Project[] = [
     result: 'One Team, One Schedule',
     tags: ['Design-Build', 'Custom Home', 'China Spring'],
     images: [
-      { src: '/projects/china-spring-design-build-home/1.jpg', alt: 'Design-build custom home exterior', caption: '' },
-      { src: '/projects/china-spring-design-build-home/2.jpg', alt: 'Interior living space', caption: '' },
+      { src: '/pages/home/services/service-2.jpg', alt: 'Design-build custom home exterior', caption: '' },
+      { src: '/pages/home/services/service-4.jpg', alt: 'Interior living space', caption: '' },
     ],
     featured: true,
   },
@@ -294,7 +294,7 @@ const designBuildProjects: Project[] = [
     result: 'Within 3% of Estimate',
     tags: ['Design-Build', 'Second Story Addition', 'Bellmead'],
     images: [
-      { src: '/projects/bellmead-design-build-addition/1.jpg', alt: 'Second story addition exterior', caption: '' },
+      { src: '/pages/home/services/service-3.jpg', alt: 'Second story addition exterior', caption: '' },
     ],
   },
 ];
@@ -317,7 +317,7 @@ const generalContractingProjects: Project[] = [
     result: 'Full Trade Coordination',
     tags: ['General Contracting', 'Public Facility', 'Killeen'],
     images: [
-      { src: '/projects/killeen-municipal-facility-renovation/1.jpg', alt: 'Renovated municipal facility interior', caption: '' },
+      { src: '/pages/home/welcome/mat-1.jpg', alt: 'Renovated municipal facility interior', caption: '' },
     ],
     featured: true,
   },
@@ -335,7 +335,7 @@ const generalContractingProjects: Project[] = [
     result: 'Faster Unit Turnaround',
     tags: ['Property Management', 'Unit Turnovers', 'Waco'],
     images: [
-      { src: '/projects/waco-multi-property-turnover/1.jpg', alt: 'Renovated rental unit interior', caption: '' },
+      { src: '/pages/home/welcome/mat-2.jpg', alt: 'Renovated rental unit interior', caption: '' },
     ],
   },
 ];

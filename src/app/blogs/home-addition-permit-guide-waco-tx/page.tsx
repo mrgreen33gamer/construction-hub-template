@@ -55,8 +55,8 @@ export default function Page() {
       <BlogHero
         title="Home Addition Permits in Waco, TX: What Triggers One and How Long It Takes"
         description="Adding square footage almost always means pulling a permit. Here's what triggers permitting in McLennan County, the typical timeline, and how a GC handles it for you."
-        imageSrc="/pages/blogs/home-addition-permits.jpg"
-        imageAlt="Building permit documents for a home addition in Waco TX"
+        imageSrc="/pages/home/services/service-1.jpg"
+        imageAlt="Construction crew working a job site during a Waco TX home addition"
         category="Permitting"
         date="April 24, 2026"
         readTime={7}

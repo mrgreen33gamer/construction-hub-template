@@ -29,7 +29,7 @@ const organizationSchema = {
 
 const AuthorBio: React.FC<AuthorBioProps> = ({
   cityName,
-  imageSrc = "/pages/about/team.jpg",
+  imageSrc = "/pages/home/welcome/hero-main.jpg",
   imageAlt = "The Bedrock Construction Group team",
 }) => {
   const trackEvent = useTrackEvent();

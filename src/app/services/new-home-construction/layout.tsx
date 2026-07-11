@@ -31,13 +31,13 @@ export const metadata: Metadata = {
     siteName: "Bedrock Construction Group",
     locale: "en_US",
     type: "website",
-    images: [{ url: `${BASE_URL}/logos/scott-apps-banner.png`, alt: "New home construction in Waco, TX – Bedrock Construction Group" }],
+    images: [{ url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`, alt: "New home construction in Waco, TX – Bedrock Construction Group" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "New Home Construction in Waco, TX | Bedrock Construction Group",
     description: "Custom and spec-built new home construction for Waco and Central Texas.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
 };
 

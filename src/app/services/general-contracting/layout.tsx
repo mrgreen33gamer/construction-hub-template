@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     siteName: "Bedrock Construction Group",
     locale: "en_US",
     type: "website",
-    images: [{ url: `${BASE_URL}/logos/scott-apps-banner.png`, alt: "General contracting and project management in Waco, TX – Bedrock Construction Group" }],
+    images: [{ url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`, alt: "General contracting and project management in Waco, TX – Bedrock Construction Group" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "General Contracting & Project Management in Waco, TX | Bedrock Construction Group",
     description: "Full project oversight for owner-designed builds in Waco and Central Texas.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
 };
 

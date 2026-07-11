@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     siteName: "Bedrock Construction Group",
     locale: "en_US",
     type: "website",
-    images: [{ url: `${BASE_URL}/logos/scott-apps-banner.png`, alt: "Kitchen and bath renovation in Waco, TX – Bedrock Construction Group" }],
+    images: [{ url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`, alt: "Kitchen and bath renovation in Waco, TX – Bedrock Construction Group" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kitchen & Bath Renovation in Waco, TX | Bedrock Construction Group",
     description: "Full gut renovations or targeted kitchen and bath updates for Waco and Central Texas.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
 };
 

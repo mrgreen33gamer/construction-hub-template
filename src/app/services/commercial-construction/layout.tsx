@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     siteName: "Bedrock Construction Group",
     locale: "en_US",
     type: "website",
-    images: [{ url: `${BASE_URL}/logos/scott-apps-banner.png`, alt: "Commercial construction in Waco, TX – Bedrock Construction Group" }],
+    images: [{ url: `${BASE_URL}/pages/home/welcome/hero-main.jpg`, alt: "Commercial construction in Waco, TX – Bedrock Construction Group" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Commercial Construction in Waco, TX | Bedrock Construction Group",
     description: "New builds and tenant improvements for Waco and Central Texas businesses.",
-    images: [`${BASE_URL}/logos/scott-apps-banner.png`],
+    images: [`${BASE_URL}/pages/home/welcome/hero-main.jpg`],
   },
 };
 

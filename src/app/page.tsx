@@ -64,14 +64,14 @@ export default function HomePage() {
       title: "Design-Build Services",
       body: "Design and construction under a single contract and a single point of contact — faster decisions, fewer handoffs, one team accountable end to end.",
       link: "/services/design-build-services",
-      image: "/pages/home/services/service-1.jpg",
+      image: "/pages/home/welcome/before.jpg",
     },
     {
       icon: faClipboardList,
       title: "General Contracting / Project Management",
       body: "Full project oversight for owner-designed builds — permitting, scheduling, and a managed subcontractor crew for every trade.",
       link: "/services/general-contracting",
-      image: "/pages/home/services/service-2.jpg",
+      image: "/pages/home/welcome/after.jpg",
     },
   ];
 

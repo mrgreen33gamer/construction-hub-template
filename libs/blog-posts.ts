@@ -19,8 +19,8 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Remodeling',
     date:     'April 28, 2026',
     readTime: 7,
-    imageSrc: '/pages/blogs/signs-you-need-a-remodel.jpg',
-    imageAlt: 'Outdated kitchen in a Waco TX home ready for renovation',
+    imageSrc: '/pages/home/services/service-2.jpg',
+    imageAlt: 'Construction crew assessing a Waco TX home ahead of a remodel',
     featured: true,
   },
   {
@@ -30,8 +30,8 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Permitting',
     date:     'April 24, 2026',
     readTime: 7,
-    imageSrc: '/pages/blogs/home-addition-permits.jpg',
-    imageAlt: 'Building permit documents for a home addition in Waco TX',
+    imageSrc: '/pages/home/services/service-1.jpg',
+    imageAlt: 'Construction crew working a job site during a Waco TX home addition',
   },
   {
     slug:     'how-to-choose-a-general-contractor-waco-tx',
@@ -40,8 +40,8 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Hiring',
     date:     'April 20, 2026',
     readTime: 8,
-    imageSrc: '/pages/blogs/choosing-a-general-contractor.jpg',
-    imageAlt: 'Homeowner reviewing a general contractor bid in Waco TX',
+    imageSrc: '/pages/home/services/service-3.jpg',
+    imageAlt: 'General contractor reviewing blueprints for a Waco TX remodel',
   },
 ];
 
