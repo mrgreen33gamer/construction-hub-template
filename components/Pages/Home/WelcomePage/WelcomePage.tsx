@@ -1,119 +1,28 @@
-// Construction Hub Hero — Site Plan + Phasing Board
-// Self-drawing construction site plan (foundation, crane, framing) — not a house wireframe.
+// Construction Hub Hero — Bedrock (general-contracting authority)
+// Photographic parallax jobsite stage + an authentic design–build photo card
+// replaces the abstract self-drawing site-plan schematic. Real imagery, amber
+// detailing, Staatliches headline. Photos live in /public/pages/home/welcome
+// and shipped with the template — now wired into the hero.
 'use client';
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PhoneIcon, ChevronIcon, CheckIcon } from './_shared/icons';
 import styles from './styles.module.scss';
 
-function ConstructionSitePlan({ label }: { label: string }) {
-  const svgRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
-    const paths = Array.from(svg.querySelectorAll<SVGGeometryElement>('[data-draw]'));
-    paths.forEach((el, i) => {
-      const length = typeof el.getTotalLength === 'function' ? el.getTotalLength() : 400;
-      el.style.strokeDasharray = `${length}`;
-      el.style.strokeDashoffset = `${length}`;
-      el.style.animation = `blueprintDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
-      el.style.animationDelay = `${0.2 + i * 0.05}s`;
-      // Safety: always reveal lines even if keyframes fail
-      window.setTimeout(() => {
-        el.style.strokeDashoffset = '0';
-      }, 2200 + i * 50);
-    });
-  }, []);
-
-  return (
-    <div className={styles.schematicWrap} role="img" aria-label={label}>
-      <div className={styles.schematicGrid} aria-hidden="true" />
-      <div className={styles.planBadge} aria-hidden="true">
-        PHASE 02 · FRAMING
-      </div>
-      <svg
-        ref={svgRef}
-        className={styles.schematic}
-        viewBox="0 0 380 340"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        {/* Site boundary */}
-        <rect data-draw x="18" y="28" width="344" height="290" rx="3" className={styles.traceDim} />
-
-        {/* Foundation slab */}
-        <rect data-draw x="48" y="170" width="200" height="110" className={styles.traceMain} />
-        <line data-draw x1="48" y1="200" x2="248" y2="200" className={styles.traceDim} />
-        <line data-draw x1="48" y1="230" x2="248" y2="230" className={styles.traceDim} />
-        <line data-draw x1="98" y1="170" x2="98" y2="280" className={styles.traceDim} />
-        <line data-draw x1="148" y1="170" x2="148" y2="280" className={styles.traceDim} />
-        <line data-draw x1="198" y1="170" x2="198" y2="280" className={styles.traceDim} />
-
-        {/* Framing studs / walls */}
-        <path
-          data-draw
-          d="M60 170 L60 95 L148 55 L236 95 L236 170"
-          className={styles.traceMain}
-        />
-        <line data-draw x1="104" y1="75" x2="104" y2="170" className={styles.traceDim} />
-        <line data-draw x1="148" y1="55" x2="148" y2="170" className={styles.traceAccent} />
-        <line data-draw x1="192" y1="75" x2="192" y2="170" className={styles.traceDim} />
-
-        {/* Roof ridge / truss hint */}
-        <path data-draw d="M60 95 L148 40 L236 95" className={styles.traceAccent} />
-        <line data-draw x1="100" y1="72" x2="148" y2="95" className={styles.traceDim} />
-        <line data-draw x1="196" y1="72" x2="148" y2="95" className={styles.traceDim} />
-
-        {/* Tower crane */}
-        <line data-draw x1="300" y1="280" x2="300" y2="48" className={styles.traceMain} />
-        <line data-draw x1="300" y1="48" x2="340" y2="48" className={styles.traceAccent} />
-        <line data-draw x1="300" y1="48" x2="250" y2="58" className={styles.traceMain} />
-        <line data-draw x1="250" y1="58" x2="250" y2="95" className={styles.traceAccent} />
-        <rect data-draw x="242" y="95" width="16" height="12" className={styles.traceAccent} />
-        <line data-draw x1="285" y1="280" x2="315" y2="280" className={styles.traceDim} />
-        <line data-draw x1="290" y1="290" x2="310" y2="290" className={styles.traceDim} />
-
-        {/* Material staging piles */}
-        <path data-draw d="M270 250 L285 220 L300 250 Z" className={styles.traceAccent} />
-        <path data-draw d="M310 255 L325 230 L340 255 Z" className={styles.traceDim} />
-
-        {/* Access road */}
-        <path
-          data-draw
-          d="M18 300 Q90 290 148 300 T248 295 L360 300"
-          className={styles.traceAccent}
-        />
-
-        {/* Dimension callouts */}
-        <line data-draw x1="48" y1="295" x2="248" y2="295" className={styles.traceDim} />
-        <line data-draw x1="48" y1="290" x2="48" y2="300" className={styles.traceDim} />
-        <line data-draw x1="248" y1="290" x2="248" y2="300" className={styles.traceDim} />
-
-        {/* Solid nodes (always visible) */}
-        <circle cx="148" cy="40" r="4" className={styles.nodeAccent} />
-        <circle cx="300" cy="48" r="4" className={styles.nodeAccent} />
-        <circle cx="250" cy="101" r="3.5" className={styles.node} />
-        <circle cx="60" cy="170" r="3" className={styles.node} />
-        <circle cx="236" cy="170" r="3" className={styles.node} />
-      </svg>
-      <div className={styles.schematicCaption} aria-hidden="true">
-        <span className={styles.captionDot} />
-        SITE PLAN · LIVE
-      </div>
-      <div className={styles.phaseChips} aria-hidden="true">
-        <span className={styles.phaseDone}>Demo</span>
-        <span className={styles.phaseDone}>Foundation</span>
-        <span className={styles.phaseActive}>Framing</span>
-        <span className={styles.phaseTodo}>Finish</span>
-      </div>
-    </div>
-  );
-}
-
 export default function WelcomePage() {
+  const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Scroll-linked parallax on the background photo. Disabled under reduced-motion.
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduceMotion ? '0%' : '16%']);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.08, reduceMotion ? 1.08 : 1.16]);
+
   const badgeText = "Waco's Most Trusted General Contractor — Since 2012";
   const headlineLines = ['Design It.', 'Build It.'];
   const headlineAccent = 'Bedrock.';
@@ -124,8 +33,24 @@ export default function WelcomePage() {
   const chips = ['Free Estimates', 'No Hidden Fees', 'Licensed & Bonded', '14+ Yrs Local', '2-Yr Warranty'];
 
   return (
-    <section className={styles.hero} aria-label="Hero">
-      <div className={styles.shard} aria-hidden="true" />
+    <section ref={heroRef} className={styles.hero} aria-label="Hero">
+      {/* Photographic parallax background — real Central Texas jobsite crew */}
+      <motion.div
+        className={styles.bgLayer}
+        style={{ y: bgY, scale: bgScale }}
+        aria-hidden="true"
+      >
+        <Image
+          src="/pages/home/welcome/before.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className={styles.bgImage}
+        />
+      </motion.div>
+      {/* Amber-over-slate scrim keeps the headline legible and on-brand */}
+      <div className={styles.scrim} aria-hidden="true" />
 
       <div className={styles.layout}>
         <div className={styles.content}>
@@ -191,13 +116,38 @@ export default function WelcomePage() {
           </motion.div>
         </div>
 
+        {/* Authentic design–build photo — the ownable image, framed as a spec card */}
         <motion.div
           className={styles.visual}
-          initial={{ opacity: 0, x: 28 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
         >
-          <ConstructionSitePlan label="Bedrock construction site plan" />
+          <div className={styles.photoCard}>
+            <Image
+              src="/pages/home/welcome/after.jpg"
+              alt="Bedrock general contractor reviewing architectural blueprints for a Waco, TX design–build project"
+              fill
+              priority
+              sizes="(max-width: 960px) 88vw, 460px"
+              className={styles.photo}
+            />
+            <div className={styles.photoGlaze} aria-hidden="true" />
+
+            <div className={styles.photoBadge}>
+              <span className={styles.photoBadgeDot} />
+              In-House Design–Build
+            </div>
+
+            <div className={styles.specCard}>
+              <span className={styles.specRow}>
+                <CheckIcon size={10} /> Written, itemized bids
+              </span>
+              <span className={styles.specRow}>
+                <CheckIcon size={10} /> 2-year workmanship warranty
+              </span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
